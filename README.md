@@ -22,6 +22,6 @@ Now check the result:
 
 ## Limitations
 
-It relies on the `ChunkyPNG` library to handle the low-level stuff that it needs to read and write the image file, so it is limited to PNG files only (but it also means you wont need to install any native code just to run it)
+It relies on the `ChunkyPNG` library to handle the low-level stuff that it needs to process the image file, so it is limited to PNG files only (but it also means you wont need to install any native code just to run it)
 
 
