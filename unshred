@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+require File.join(File.dirname(File.expand_path __FILE__), 'lib/unshredder')
+
+if ARGV.empty?
+  puts "Usage:"
+  puts "  #{File.basename $0} file.png" 
+  exit 1
+end
+
+Unshredder.instance.process ARGV.first
