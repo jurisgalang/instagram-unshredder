@@ -14,14 +14,13 @@ class Unshredder
   
   private
   def unshredded
-    puts "strips: #{strip_count}"
-    strips = [p = (strip_count / 2).round]
+    strips = [p = rand(strip_count)]
     loop do
-      print "[#{p}]"
       assemble strips, :right
       assemble strips, :left
       break if strips.count == strip_count
-      strips = [(p += 1) % strip_count]
+      p = (p + 1) % strip_count
+      strips = [p]
     end
     rotate strips
     strips
@@ -38,7 +37,6 @@ class Unshredder
   
   def rotate strips
     loop do
-      print "."
       m = best_match strips.first, strips, :left
       break unless m[1] == strips.count - 1
       strips.push strips.shift
@@ -68,7 +66,7 @@ class Unshredder
     
     # map the average distance between columns of pixels
     distances = []
-    @width.times{ |n| distances << [ n, distance(n) ] }
+    @width.times{ |n| distances << [ n, distance(n, n + 1) ] }
 
     # map the average distances into the difference between distances
     distances.map! do |n, d1|
@@ -104,8 +102,7 @@ class Unshredder
   end
   
   # calculate the average color distance between columns
-  def distance i, j = nil
-    j  = i + 1 if j.nil?
+  def distance i, j
     c1 = @image.column(i)
     c2 = @image.column(j % @width)
     Array.new(@height){ |n| color_distance(c1[n], c2[n]) }.reduce(:+) / @height
